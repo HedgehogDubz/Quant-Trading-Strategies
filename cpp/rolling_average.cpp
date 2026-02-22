@@ -3,7 +3,7 @@
 int add (int a, int b){
     return a + b;
 }
-PYBIND11_MODULE(moving_average, m){
+PYBIND11_MODULE(rolling_average, m){
     m.doc() = "pybind11 example plugin";
     m.def("add", &add, "Add two numbers");
 }
