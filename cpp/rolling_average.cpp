@@ -52,14 +52,12 @@ std::vector<int> get_buys(
     const std::vector<double> rolling_average
 ) {
     std::vector<int> out;
-    bool is_start = true;
-    bool prev_up = true;
+    bool prev_up = false;
     for (size_t i = 1; i < rolling_average.size(); ++i){
         bool cur_up = rolling_average[i] > rolling_average[i-1];
-        if (!is_start && cur_up && !prev_up){
+        if (cur_up && !prev_up){
             out.push_back(i);
         }
-        is_start = false;
         prev_up = cur_up;
     }
     return out;
@@ -82,7 +80,7 @@ std::vector<int> get_sells(
 }
 PYBIND11_MODULE(rolling_average, m) {
     m.doc() = "Rolling average calculation module";
-    m.def("get_rolling_average", &get,
+    m.def("get", &get,
           "Calculate rolling average of closing prices",
           py::arg("closing_prices"),
           py::arg("window_size"));
